@@ -12,10 +12,10 @@ class Main {
 
 		t = br.readLine());
 		if(t <= 100 && t != null){
-			testCases = t;
+			testCases = t;S
 			for(int i=0; i<testCases; i++){
 				if(t = br.readLine() != null){
-					System.out.println()
+					System.out.println();
 					System.out.println("case " + case + ": good");
 					System.out.println("case " + case + ": bad");
 				}
