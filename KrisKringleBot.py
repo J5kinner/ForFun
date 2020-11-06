@@ -16,10 +16,10 @@ olivia_id = "100004648574032"
 jonah_id = "100005255521706" , "Jonah"
 hamish_id = "100000506289191", "Hamish"
 jesse_id = "100000763206918", "Jesse"
-connorD_id = "100001494927645", "Connor Duke"
+connorD_id = "100001494927645", "ConnorD"
 bailey_id = "100006847812378", "Bailey"
 beez_id = "605579574", "Beeez"
-connorP_id = "624019890", "Connor Phipps"
+connorP_id = "624019890", "ConnorP"
 brendan_id = "837735817", "Brendan"
 
 
