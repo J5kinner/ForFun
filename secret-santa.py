@@ -45,7 +45,8 @@ while True:
     except FBchatException:
         print("Login failed...")
     except:
-        print("There has been an error with the client login system...")
+        print("There has been an error with the client login system... \n"
+              "Check fbchat/_state.py line 190, replace with \"revision = 1\"")
         exit(1)
     else:
         print("Login successful!")
