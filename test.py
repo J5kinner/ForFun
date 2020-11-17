@@ -9,112 +9,84 @@ import random
 # Usage
 def usage():
     print("This is a tool used to generate secret santas over Facebook Messenger.")
-    print("Usage:\t\tpython secret-santa.py [-options] [<input-file>]")
+    print("Usage:\t\tpython secret-santa.py [-options]")
     print("Options:")
     print("-h\t\tHelp: display this message.")
-    print("-t\t\tTest: print out the sorting order instead of sending messages.")
-    print("-u \t\tUser: The host's username and password are the first two lines of the input file.")
-    print("\t\tIf this option is not set, you will be prompted for login details.")
-    print("\nThe input file should contain a list of participants' Messenger account links, each on a new line.")
-    print("messenger.com/t/<username>")
+    print("-t\t\tTest: print out results instead of sending messages to participants.")
+    print("\nTo use this program, you will be prompted to log in with a Facebook account. Don't use your main "
+          "account if you are participating in the Secret Santa. You will then need to provide a Group Chat ID: "
+          "\n\tmessenger.com/t/<this-is-the-group-chat-id>")
+    print("This group should have all the participants of the Secret Santa and the host account.")
+    print("If the [-t] option has been set, a randomised list of participants will be printed. Otherwise, "
+          "each participant will be sent a message with their Secret Santa.")
     exit(0)
 
 
-if len(sys.argv) == 1 or sys.argv[1] == "-h":
+if len(sys.argv) != 1 and sys.argv[1] == "-h":
     usage()
 
-del sys.argv[0]
-userInFile = "-u" in sys.argv
 testMode = "-t" in sys.argv
 
-# this jank to remove options from the arguments
-k = len(sys.argv)
-for i in range(k):
-    j = k - i - 1;
-
-    string = sys.argv[j]
-    if string[0] == '-':
-        del sys.argv[j]
-
-# Open input file
-if len(sys.argv) != 0:
-    filename = sys.argv[0]
-else:
-    filename = input("Input file > ")
-
-openSuccess = False
-while not openSuccess:
-    try:
-        file = open(sys.argv[0], "r")
-    except:
-        print("Input file could not be opened.")
-        filename = input("Input file > ")
-    else:
-        openSuccess = True
-        print("Opened file successfully.")
-
-# get login details
-if userInFile:
-    username = file.readline().rstrip('\n')
-    password = file.readline().rstrip('\n')
-else:
-    username = input("Host email > ")
-    password = input("Host password > ")
 
 # login to facebook here
-if not testMode:
-    loginSuccess = False
-    while not loginSuccess:
-        try:
-            client = Client(username, password, None, 1)
-        except FBchatException:
-            print("Login failed...")
-            username = input("Host email > ")
-            password = input("Host password > ")
-        except:
-            print("There has been an error with the client login system...")
-            break
-        else:
-            print("Login successful!")
-            loginSuccess = True
+while True:
+    try:
+        username = input("Host email > ")
+        password = input("Host password > ")
 
-# make collection of all users in the file
-inputParticipants = file.read().splitlines()
+        client = Client(username, password, None, 1)
+    except FBchatException:
+        print("Login failed...")
+    except:
+        print("There has been an error with the client login system...")
+        exit(1)
+    else:
+        print("Login successful!")
+        break
+
+# get list of user IDs from group thread
+while True:
+    try:
+        groupID = input("Group ID > ")
+        inputGroup = client.fetchGroupInfo(groupID)
+    except FBchatException:
+        print("Could not find a group with this ID...")
+    except:
+        print("There has been an error collecting the group info...")
+    else:
+        print("Group {} found!".format(groupID.name))
+
+inputParticipants = inputGroup.participants
+if client.uid in inputParticipants:
+    inputParticipants.remove(client.uid)
 
 # sort the list randomly and store the head of the list
 # each participant is assigned the next member of the list, and the last participant is assigned the first.
 print("Count: " + str(len(inputParticipants)) + ", Inputs: ")
 for p in inputParticipants:
-    p = p.strip()
-    # TODO: find a way to get user ID from url
-    print(p)    # .name
+    print(p.name)
 
 sortedParticipants = []
 while len(inputParticipants) > 0:
     i = random.randrange(len(inputParticipants))
     sortedParticipants.append(inputParticipants.pop(i))
 
-if testMode:
-    sortedNames = []
+# send a message to all participants with the name of the next person in the list
+if len(sortedParticipants) != 0:
+    for i in range(len(sortedParticipants)):
+        if i == len(sortedParticipants)-1:
+            j = 0
+        else:
+            j = i+1
+        thisUID = sortedParticipants[i]
+        nextUID = sortedParticipants[j]
+        try:
 
-    print("\nOutput: ")
-    for p in sortedParticipants:
-
-        print(p)
-else:
-    # send a message to all participants with the name of the next person in the list
-    thread_type = ThreadType.USER
-    if len(sortedParticipants) != 0:
-        for i in range(len(sortedParticipants)):
-            if i == len(sortedParticipants)-1:
-                j = 0
+            if testMode:
+                print("{} --> {}".format(thisUID.name, nextUID.name))
             else:
-                j = i+1
-            thisUID = sortedParticipants[i]
-            nextUID = sortedParticipants[j]
-            try:
-                client.send(Message(text="Hi there! Your Secret Santa is {}!".format(nextUID.name), thread_id=thisUID,thread_type=thread_type))
-            except:
-                print("Error sending message to {}".format(thisUID.name))
+                # client.send(Message(text="Hi there! Your Secret Santa is {}!".format(nextUID.name), thread_id=thisUID,thread_type=ThreadType.USER))
+                print("sent text to person {}".format(i))
+        except:
+            print("Error sending message to {}".format(thisUID.name))
 
-file.close()
