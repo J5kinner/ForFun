@@ -6,19 +6,21 @@ from fbchat.models import *
 import random
 
 
-# Usage
+# Usage - invoke with '-h'
 def usage():
     print("This is a tool used to generate secret santas over Facebook Messenger.")
     print("Usage:\t\tpython secret-santa.py [-options]")
     print("Options:")
     print("-h\t\tHelp: display this message.")
+    print("-s\t\tSelect: choose to include or exclude specific people in the group. \n\t\tYou will be prompted to "
+          "choose before messages are sent.")
     print("-t\t\tTest: print out results instead of sending messages to participants.")
     print("\nTo use this program, you will be prompted to log in with a Facebook account. Don't use your main "
           "account if you are participating in the Secret Santa. You will then need to provide a Group Chat ID: "
           "\n\tmessenger.com/t/<this-is-the-group-chat-id>")
     print("This group should have all the participants of the Secret Santa and the host account.")
     print("If the [-t] option has been set, a randomised list of participants will be printed. Otherwise, "
-          "each participant will be sent a message with their Secret Santa.")
+          "each participant will be sent a message with their Secret Santa and the results will not be printed.")
     exit(0)
 
 
@@ -26,6 +28,7 @@ if len(sys.argv) != 1 and sys.argv[1] == "-h":
     usage()
 
 testMode = "-t" in sys.argv
+selectMode = "-s" in sys.argv
 
 
 # login to facebook here
@@ -48,28 +51,35 @@ while True:
 while True:
     try:
         groupID = input("Group ID > ")
-        inputGroup = client.fetchGroupInfo(groupID)
+        inputGroup = client.fetchGroupInfo(groupID).get(groupID)
     except FBchatException:
         print("Could not find a group with this ID...")
-    except:
-        print("There has been an error collecting the group info...")
+    #except:
+     #   print("There has been an error collecting the group info...")
     else:
-        print("Group {} found!".format(groupID.name))
+        print("\nGroup \"{}\" found!".format(inputGroup.name))
+        if selectMode:
+            confirmation = input("Select from users in this group? [Y/n] > ")
+        else:
+            confirmation = input("Send messages to all users in this group? [Y/n] > ")
+        if confirmation.lower()[0] == 'y':
+            break
 
-inputParticipants = inputGroup.participants
-if client.uid in inputParticipants:
-    inputParticipants.remove(client.uid)
+inputParticipantDict = client.fetchUserInfo(*list(inputGroup.participants))
 
+if client.uid in inputParticipantDict.keys():
+    del inputParticipantDict[client.uid]
 # sort the list randomly and store the head of the list
 # each participant is assigned the next member of the list, and the last participant is assigned the first.
-print("Count: " + str(len(inputParticipants)) + ", Inputs: ")
-for p in inputParticipants:
-    print(p.name)
+print("Host excluded: {}".format(client.name))
+print("Count: {}, Inputs: ".format(len(inputParticipantDict)))
+for value in inputParticipantDict.values():
+    print(value.name)
 
 sortedParticipants = []
-while len(inputParticipants) > 0:
-    i = random.randrange(len(inputParticipants))
-    sortedParticipants.append(inputParticipants.pop(i))
+while len(inputParticipantDict) > 0:
+    i = random.randrange(len(inputParticipantDict))
+    sortedParticipants.append(inputParticipantDict.pop(i))
 
 # send a message to all participants with the name of the next person in the list
 if len(sortedParticipants) != 0:
