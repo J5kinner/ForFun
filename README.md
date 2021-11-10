@@ -1,8 +1,7 @@
 # ForFun [![Cult Of Jonah's][cult-img]][cult]
 
-<img src="https://ai.github.io/size-limit/logo.svg" align="right"
+<img src="https://gist.githubusercontent.com/ktzanev/770faf461fa23a5f7e8649691f89c025/raw/a7559eecbb42304907e763a5c8ccebff6896f0f2/anonymous.svg" align="right"
      alt="Size Limit logo by Anton Lovchikov" width="120" height="178">
-
 ForFun is a repository where I've placed some side projects I've done in the
 past for no other reason than friends and fooling around. 
 
