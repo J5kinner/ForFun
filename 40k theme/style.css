@@ -2,9 +2,12 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto:wght@400;500;700;900&display=swap');
+  /* Remove print if you want a single column printed */
 
 @media only print {
 
+
+  /* This code below creates a 2 column look */
   div.battlescribe {
     columns: 200px 2;
   }
