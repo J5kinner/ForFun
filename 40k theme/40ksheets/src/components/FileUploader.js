@@ -1,14 +1,19 @@
-import React from "react";
-import "../assets/css/style.css";
+import React, {useState} from 'react'
 
 function FileUploader() {
-  return (
-    <div className="upload-container">
-      <div className="single">
-        <button>Upload HTML</button>
-      </div>
-    </div>
-  );
+   
+    const [selectedFile, setSelectedFile] = useState(null);
+
+    const onChangeHandler = (e) => {
+        console.log(e.target.files[0])
+        setSelectedFile(e.target.files[0])
+    }
+    return (
+        <div className="upload-container">
+            <input type="file" name="file" onChange={onChangeHandler}/>
+            
+        </div>
+    )
 }
 
-export default FileUploader;
+export default FileUploader

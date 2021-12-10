@@ -1,15 +1,16 @@
-import React from 'react'
-import FileUploader from './FileUploader'
-import Preview from './Preview'
+import React, { useState } from "react";
+import FileUploader from "./FileUploader";
+import Preview from "./Preview";
 
 function Uploader() {
-    return (
-        <div className="uploader-container">
-            <Preview/>
-            <FileUploader/>
-            
-        </div>
-    )
+  
+
+  return (
+    <div className="uploader-container">
+      <Preview />
+      <FileUploader/>
+    </div>
+  );
 }
 
-export default Uploader
+export default Uploader;
