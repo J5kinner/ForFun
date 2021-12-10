@@ -1,0 +1,24 @@
+.main-section {
+    display: flex;
+    flex-direction: row;
+}
+
+.preview-container {
+    display: flex;
+    flex-direction: row;
+
+}
+
+img {
+    max-width: 400px;
+    max-height: auto;
+}
+.preview-container {
+    padding: 1em;
+
+}
+
+.upload-container {
+    padding: 1em;
+
+}
