@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 function FileUploader() {
-
   const singleColCSS = `<style>
   @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap");
   @import url("https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto:wght@400;500;700;900&display=swap");
@@ -720,7 +719,7 @@ function FileUploader() {
     display: none;
   }
 </style>`;
-  const originalCSS =`    <style>
+  const originalCSS = `    <style>
   body.battlescribe {
     margin: 0px;
     padding: 0px;
@@ -915,8 +914,8 @@ function FileUploader() {
   div.battlescribe span.caps {
     font-variant: small-caps;
   }
-</style>`
-const doubleColCSS = ` <style>
+</style>`;
+  const doubleColCSS = ` <style>
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto:wght@400;500;700;900&display=swap");
 
@@ -1392,17 +1391,27 @@ br + p {
     padding: 4px;
   }
 }
-</style>`
+</style>`;
+
+const [selectFile, setFile] = useState({
+  fileType: "html", 
+  fileDownloaderURL: null, 
+  status: "",
+  nameOfFile:"Prettier Version"
+});
+let htmlFile;
+let fileName;
 
   const showFile = async (e) => {
     e.preventDefault();
     const reader = new FileReader();
     reader.onload = async (e) => {
       const textSave = e.target.result;
-      let html = textSave;
-      console.log("BEFORE " +html);
-      //Creates a 
-      html = textSave.replace(`    <style>
+       htmlFile = textSave;
+      console.log("BEFORE " + htmlFile);
+      //Creates a
+      htmlFile = textSave.replace(
+        `    <style>
       body.battlescribe {
         margin: 0px;
         padding: 0px;
@@ -1597,7 +1606,8 @@ br + p {
       div.battlescribe span.caps {
         font-variant: small-caps;
       }
-    </style>`, `<style>
+    </style>`,
+        `<style>
       @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap");
       @import url("https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto:wght@400;500;700;900&display=swap");
 
@@ -2314,36 +2324,50 @@ br + p {
       br+p {
         display: none;
       }
-    </style>`);
-      console.log("AFTER " + html);
-
+    </style>`
+      );
+      console.log("AFTER " + htmlFile);
       // console.log(textSave)
       // alert(textSave);
-
     };
+    fileName = e.target.files[0].name;
+    console.log(fileName)
+    console.log(e.target.files[0]);
     reader.readAsText(e.target.files[0]);
+   
 
   };
 
-  const loadFile = async (e)=> {
-    e.preventDefault(); 
-    const fs = require('fs');
+  const download = async (e) => {
+    e.preventDefault();
+    const blob = new Blob([htmlFile], {type: 'text/html'});
+    const fileDownloadUrl = URL.createObjectURL(blob);
+    console.log(blob);
+    setFile ({fileDownloadUrl: fileDownloadUrl}, 
+      () => {
+        selectFile.dofileDownload.click(); 
+        URL.revokeObjectURL(fileDownloadUrl);  // free up storage--no longer needed.
+        setFile({fileDownloadUrl: ""})
+    }) 
+    console.log("Download file " + selectFile);
+    console.log(selectFile)
 
-  //var data = fs.readFileSync(filepath, 'utf-8');
-
-  // replace 'world' together with the new line character with empty
-
-  //fs.writeFileSync(filepath, newValue, 'utf-8');
-  }
-
-
-
+  };
 
   return (
     <div className="upload-container">
       <input type="file" name="file" onChange={showFile} />
-      <input type="file" name="file" onChange={loadFile} />
-
+      <button onClick={download}>Download </button>
+      <a className="hidden"
+             download={selectFile}
+             href={selectFile.fileDownloadUrl}
+             ref={selectFile}
+          >download it</a>
+      {/* <a className="hidden"
+             download={fileName[selectFile.fileType]}
+             href={selectFile.fileDownloadUrl}
+             ref={e=>selectFile.dofileDownload = e}
+          >download it</a> */}
     </div>
   );
 }
