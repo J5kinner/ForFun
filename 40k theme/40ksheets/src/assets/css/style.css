@@ -59,7 +59,9 @@ button {
         box-shadow: 0 4px 4px rgba(83, 100, 255, 0.32);
       }
 
-
+p {
+    align-content: left;
+}
 @media screen and (max-width: 1000px) {
   .upload-container {
     flex-direction: column;
