@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import singleColumnImg from "../assets/images/singleCol.png";
-import doubleColumnImg from "../assets/images/doubleCol.png";
+import singleColumnImg from "../assets/images/singleCol.webp";
+import doubleColumnImg from "../assets/images/doubleCol.webp";
 import Preview from "./Preview";
 import "../assets/css/style.css";
 
