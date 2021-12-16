@@ -1,9 +1,7 @@
-import logo from './logo.svg';
-import './App.css';
-import FileUploader from './components/FileUploader';
-import Preview from './components/Preview';
+import logo from "./assets/images/White-Warhammerlogo.png";
+import "./App.css";
 import "./assets/css/style.css";
-import Uploader from './components/Uploader';
+import FileUploader from "./components/FileUploader";
 
 function App() {
   return (
@@ -11,14 +9,8 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <div className="main-section">
-          <Uploader/>
+          <FileUploader />
         </div>
-     
-        
-
-        
-     
-       
       </header>
     </div>
   );
