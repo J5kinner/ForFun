@@ -4,7 +4,7 @@
 }
 
 img {
-  max-width: 400px;
+  max-width: 100%;
   max-height: auto;
 }
 .upload-type {
@@ -19,7 +19,14 @@ img {
   flex-direction: row;
 }
 
+input {
+    padding: 1em;
+}
+
 a {
+    padding: 1em;
+    border-radius: 15px;
+
   background-color: #4caf50; /* Green */
   border: none;
   color: white;
@@ -30,8 +37,36 @@ a {
   font-size: 16px;
 }
 
+button {
+    padding: 1em;
+        display: inline-block;
+        margin-right: 10px;
+        background: #339DFF;
+        color: #fff;
+        text-decoration: none;
+        font-size: 13px;
+        line-height: 38px;
+        border-radius: 15px;
+        -webkit-transition: all 0.3s;
+        transition: all 0.3s;
+        width: 100%;
+        text-align: center;
+      }
+      
+      button:hover {
+        background: #fff;
+        color: #339DFF;
+        box-shadow: 0 4px 4px rgba(83, 100, 255, 0.32);
+      }
+
+
 @media screen and (max-width: 1000px) {
   .upload-container {
     flex-direction: column;
+  }
+
+  img {
+    max-width: 80%;
+    max-height: auto;
   }
 }
