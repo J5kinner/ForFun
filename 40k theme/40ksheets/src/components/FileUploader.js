@@ -1287,7 +1287,7 @@ function FileUploader() {
       <div className="upload-type">
         <Preview title="Single Column" image={singleColumnImg} />
         <label for="file1">Choose a HTML File</label>
-        <input type="file" name="file1" onChange={showFile} accept=".html" />
+        <input id="file1" type="file" name="file" onChange={showFile} accept=".html" />
 
         {selectFile.newFileName === "40kBeautified.html" ? (
           <a
@@ -1307,8 +1307,8 @@ function FileUploader() {
       <br />
       <div className="upload-type">
         <Preview title="Double Column" image={doubleColumnImg} />
-        <label for="file1">Choose a HTML File</label>
-        <input type="file" name="file" onChange={show2ColFile} accept=".html" />
+        <label for="file2">Choose a HTML File</label>
+        <input id="file2" type="file" name="file" onChange={show2ColFile} accept=".html" />
 
         {selectFile.newFileName === "40kBeautified2Col.html" ? (
           <a
