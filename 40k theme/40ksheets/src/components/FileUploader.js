@@ -1243,7 +1243,7 @@ function FileUploader() {
     reader.readAsText(e.target.files[0]);
   };
 
-  const download = async (e) => {
+  const transform = async (e) => {
     e.preventDefault();
     const blob = new Blob([selectFile.data], { type: "text/html" });
     const fileDownloadUrl = URL.createObjectURL(blob);
@@ -1261,7 +1261,7 @@ function FileUploader() {
     );
   };
 
-  const download2Col = async (e) => {
+  const transform2Col = async (e) => {
     e.preventDefault();
     const blob = new Blob([selectFile.data], { type: "text/html" });
     const fileDownloadUrl = URL.createObjectURL(blob);
@@ -1286,10 +1286,12 @@ function FileUploader() {
     <div className="upload-container">
       <div className="upload-type">
         <Preview title="Single Column" image={singleColumnImg} />
-        <input type="file" name="file" onChange={showFile} />
+        <label for="file1">Choose a HTML File</label>
+        <input type="file" name="file1" onChange={showFile} accept=".html" />
+
         {selectFile.newFileName === "40kBeautified.html" ? (
           <a
-            className="hidden"
+            className="download"
             download={selectFile.newFileName}
             href={selectFile.fileDownloaderURL}
             ref={selectFile}
@@ -1297,16 +1299,20 @@ function FileUploader() {
             Download it
           </a>
         ) : (
-          <button onClick={download}>Transform</button>
+          <button className="glow-on-hover" onClick={transform}>
+            Transform
+          </button>
         )}
       </div>
       <br />
       <div className="upload-type">
         <Preview title="Double Column" image={doubleColumnImg} />
-        <input type="file" name="file" onChange={show2ColFile} />
+        <label for="file1">Choose a HTML File</label>
+        <input type="file" name="file" onChange={show2ColFile} accept=".html" />
+
         {selectFile.newFileName === "40kBeautified2Col.html" ? (
           <a
-            className="hidden"
+            className="download"
             download={selectFile.newFileName}
             href={selectFile.fileDownloaderURL}
             ref={selectFile}
@@ -1314,7 +1320,9 @@ function FileUploader() {
             Download it
           </a>
         ) : (
-          <button onClick={download2Col}>Transform</button>
+          <button className="glow-on-hover" onClick={transform2Col}>
+            Transform
+          </button>
         )}
       </div>
     </div>

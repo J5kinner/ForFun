@@ -15,7 +15,7 @@ function App() {
           <FileUploader />
         </div>
       </header>
-      <footer><p>Proudly Made by <a href="https://jonahskinner.com/">Jonah Skinner</a></p></footer>
+      <footer><p>Proudly made by <a className="footer-a" href="https://jonahskinner.com/">Jonah Skinner</a></p></footer>
     </div>
   );
 }
