@@ -13,6 +13,7 @@ function App() {
           <p>1. Download HTML file from battlescribe</p>
           <p>2. Upload your HTML file to which style you prefer</p>
           <FileUploader />
+          <p><strong>When Printing</strong>: Remember to <i>add background graphics</i> OR <i>print background</i> to get colours</p>
         </div>
       </header>
       <div className="footer">
