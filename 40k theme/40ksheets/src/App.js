@@ -14,6 +14,8 @@ function App() {
           <p>2. Upload your HTML file to which style you prefer</p>
           <FileUploader />
           <p><strong>When Printing</strong>: Remember to <i>add background graphics</i> OR <i>print background</i> to get colours</p>
+          <p>Then save the HTML file as a PDF then print 😄</p>
+
         </div>
       </header>
       <div className="footer">
