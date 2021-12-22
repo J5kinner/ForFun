@@ -16,7 +16,6 @@ past for no other reason than friends and fooling around.
 1. Secret Santas is different bots which can send messages to other people in a 
    notifying them who their secret santas are via facebook messenger in `secret-santa.py`
 2. onlineJudge is a online ACM coding competition practice questions I've completed.
-3. The rest is just branching out into the unknowns of my programming knowledge.
-4. 40k theme is a stylesheet for Battlescribe HTML army sheets so that they are easier to read. 
+4. 40ksheets is a website I made to convert HTML datasheets and make them readable
 
 
