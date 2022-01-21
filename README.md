@@ -1,4 +1,4 @@
-# ForFun [![Cult Of Jonah's][cult-img]][cult]
+# ForFun 
 
 ForFun is a repository where I've placed some side projects I've done in the
 past for no other reason than friends and fooling around. 
