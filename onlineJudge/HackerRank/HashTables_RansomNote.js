@@ -38,23 +38,23 @@ function checkMagazine(magazine, note) {
   //if theres a new word in note (case sensitive words included) -> NO
   //if every word in note exists in mag -> YES
 
-    let map = { };
-    let replicable = true;
-    for (let i of magazine) {
-        map[i] = (map[i] || 0) + 1;
-    }
-    for (let i of note) {
-        map[i] = (map[i] || 0) - 1;
-    }
-    for (let i in map) {
-        if(!replicable) {
-            break;
-        } else if(map[i] < 0) {
-            replicable = false;
-        }
-    }
-  //   console.log(map);
-    console.log(replicable ? "Yes" : "No");
+  let map = { };
+  let replicable = true;
+  for (let i of magazine) {
+      map[i] = (map[i] || 0) + 1;
+  }
+  for (let i of note) {
+      map[i] = (map[i] || 0) - 1;
+  }
+  for (let i in map) {
+      if(!replicable) {
+          break;
+      } else if(map[i] < 0) {
+          replicable = false;
+      }
+  }
+//   console.log(map);
+  console.log(replicable ? "Yes" : "No");
 }
 
 function main() {
