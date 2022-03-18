@@ -1,0 +1,30 @@
+/** @license 4050 Boyz
+  * Copyright (c) 4050 Boyz, Inc. and its affiliates.
+  *
+  * Authors: 
+  * 
+  */
+.dash-card {
+  width: 300px;
+  margin: 10px;
+}
+
+.dash-card:hover {
+  background: #e8e8e8;
+}
+
+.dash-card-body {
+  text-align: center;
+}
+
+.jobLocation {
+  color: black;
+}
+
+.jobPrice {
+  color: black;
+}
+
+.job:hover {
+  text-decoration: none;
+}
