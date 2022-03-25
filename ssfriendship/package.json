@@ -1,54 +1,24 @@
 {
-  "name": "swapstreet",
-  "version": "1.0.0",
+  "name": "ssfriendship",
+  "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@craco/craco": "^6.4.0",
-    "@fullhuman/postcss-purgecss": "^4.0.3",
-    "@sendgrid/mail": "^7.4.6",
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
-    "axios": "^0.21.1",
-    "bcrypt": "^5.0.1",
-    "bootstrap": "^5.1.1",
-    "cors": "^2.8.5",
-    "cross-env": "^7.0.3",
-    "crypto": "^1.0.1",
-    "dotenv": "^10.0.0",
-    "express": "^4.17.1",
-    "google-map-react": "^2.1.10",
-    "gridfs-stream": "^1.1.1",
-    "jquery": "^3.6.0",
-    "jshint": "^2.13.1",
-    "jsonwebtoken": "^8.5.1",
-    "leaflet": "^1.7.1",
-    "mongoose": "^5.13.7",
-    "multer": "^1.4.3",
-    "multer-gridfs-storage": "^5.0.2",
-    "node-sass": "^5.0.0",
-    "nodemon": "^2.0.12",
+    "@testing-library/jest-dom": "^5.16.2",
+    "@testing-library/react": "^12.1.4",
+    "@testing-library/user-event": "^13.5.0",
+    "express": "^4.17.3",
+    "markdown-it": "^12.3.2",
     "react": "^17.0.2",
-    "react-bootstrap": "^2.0.0-rc.0",
     "react-dom": "^17.0.2",
-    "react-leaflet": "^3.2.1",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.3",
-    "sass": "^1.42.1",
-    "styled-components": "^5.3.1",
-    "web-vitals": "^1.0.1"
+    "react-markdown": "^8.0.1",
+    "react-scripts": "5.0.0",
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "cross-env PORT=3006 react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "server": "nodemon server/server.js",
-    "build:ui": "rm -f build && npm run build",
-    "deploy": "git push heroku main",
-    "deploy:full": "npm run build:ui && git add . && git commit -m && npm run deploy",
-    "log:prod": "heroku log --tail",
-    "postbuild": "purgecss --css build/static/css/*.css --content build/index.html build/static/js/*.js --output build/static/css"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -56,19 +26,16 @@
       "react-app/jest"
     ]
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not op_mini all"
-  ],
-  "devDependencies": {
-    "eslint-config-airbnb": "^18.2.1",
-    "eslint-plugin-import": "^2.25.2",
-    "eslint-plugin-jsx-a11y": "^6.4.1",
-    "eslint-plugin-react": "^7.26.1",
-    "eslint-plugin-react-hooks": "^4.2.0",
-    "gh-pages": "^3.2.3",
-    "gulp": "^4.0.2",
-    "gulp-append-prepend": "^1.0.9"
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
