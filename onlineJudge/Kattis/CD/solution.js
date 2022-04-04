@@ -5,10 +5,11 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 let startVars;
+let ans = 0;
 let jackSize;
 let jillSize;
-let jackMap = new Map();
-let cdsOwned = 0;
+let jackMap = new Set();
+// let solutions = new Array();
 
 rl.once("line", (line) => {
   startVars = line.split(" ");
@@ -18,24 +19,51 @@ rl.once("line", (line) => {
   let jillCount = jillSize;
   rl.on("line", (line) => {
     const str = line;
-    if (str === "0 0") {
-        // console.log("we done");
-        rl.close();
+    const newStrChk = line.split(" ");
+    // console.log(newStrChk);
+    if (newStrChk.length > 1) {
+      // console.log("Heyy");
+      //NEED TO SOLVE WHEN WE HAVE ANOTHER NEW LIST APPEAR UNDERNEATH A CURRENT LIST
+      if (jackCount === 0 && jillCount === 0) {
+        console.log(ans);
       }
+      if (ans !== NaN) {
+        // solutions.push(ans);
+        ans = 0;
+      }
+
+      jackMap = new Set();
+      jackCount = parseInt(newStrChk[0]);
+      jillCount = parseInt(newStrChk[1]);
+      // console.log("Reset: " + jackCount + " "+jillCount);
+    }
+    if (
+      newStrChk.length > 1 &&
+      parseInt(newStrChk[0]) === 0 &&
+      parseInt(newStrChk[0]) === 0
+    ) {
+      //  console.log("we done");
+      rl.close();
+    }
+    //   console.log("Count " + jillCount + " " + jackCount);
+
     if (jillCount > 0 && jackCount === 0) {
       if (jackMap.has(str)) {
-        cdsOwned++;
-        // console.log("Finding " + str);
+        //  console.log("Found " + str);
+        ans++;
       }
       jillCount--;
     }
     if (jackCount > 0) {
-      jackMap.set(str);
-      //   console.log("Storing " + str);
+      jackMap.add(str);
+      // console.log("Storing " + str);
       jackCount--;
     }
   }).on("close", () => {
-    console.log(cdsOwned);
+    // const filter = new Set([...jillMap].filter(i => jackMap.has(i)))
+    //console.log(filter.size);
+    // solutions.push(filter.size);
+    // solutions.forEach(x => console.log(x));
+    // console.log(solutions);
   });
 });
-
