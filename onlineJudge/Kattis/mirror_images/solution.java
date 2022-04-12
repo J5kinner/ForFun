@@ -1,21 +1,28 @@
-import java.util.Scanner;
+import java.util.*;
 
 public class solution {
-    public static void main(String[] args){
-        Scanner in = new Scanner(System.in);
-        int testCases = in.nextInt();
-        String line = in.nextLine();
-        int rows = in.nextInt();
-        int cols = in.nextInt();
-        String arr[][] = new String[rows][cols];
-        char flip[][] = new char[rows][cols];
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
 
-        for(int i=0; i<rows; i++){
-            for(int j=0; j<cols; j++){
-                arr[i][j] = in.next();
-                System.out.println(arr[j][i]);
+        for (int i = 1; i <= t; i++) {
+            int r = sc.nextInt();
+            int c = sc.nextInt();
+            sc.nextLine();
+
+            String[] lines = new String[r];
+            for (int j = 0; j < r; j++) {
+                lines[j] = sc.nextLine();
+            }
+
+            System.out.println("Test " + i);
+            for (int j = r - 1; j >= 0; j--) {
+                for (int k = c - 1; k >= 0; k--) {
+                    System.out.print(lines[j].charAt(k));
+                }
+                System.out.println();
             }
         }
-        in.close();
+
     }
 }
