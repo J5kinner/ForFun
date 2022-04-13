@@ -1,4 +1,4 @@
-const minDiff = (n, arr) => {
+const mDiff = (n, arr) => {
     let totals = 0;
     let sorted = arr.sort();
     for(let i=0; i<n-1; i++){
