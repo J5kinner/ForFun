@@ -8,10 +8,10 @@ isAnagram = (word1, word2) => {
 const countSents = (wordSet, sentence) => {
     const anagramMap = new Map();
     let totalAnagrams = 0;
-        for(let i=0; i<wordSet.length; i++){
-            const sort1 = wordSet[i].split('').sort((a,b) => a.localeCompare(b)).join('');
+        for(let i=0; i<wordSet.length; i++){ //O(n)
+            const sort1 = wordSet[i].split('').sort((a,b) => a.localeCompare(b)).join(''); //O(nlogn)
         
-            if(anagramMap.has(sort1)){
+            if(anagramMap.has(sort1)){ //O(1)
                 const value = anagramMap.get(sort1);
                 anagramMap.set(sort1, value+1);
             } else {
@@ -19,11 +19,11 @@ const countSents = (wordSet, sentence) => {
             }
         }
         const splSent = sentence.split(" ");
-        console.log(anagramMap);
-        for(let j=0; j<splSent.length; j++){
-            const sortSentWord = splSent[j].split('').sort((a,b) => a.localeCompare(b)).join('');
-            console.log("word "+ splSent[j] + " has: " + anagramMap.has(sortSentWord) + " times " + anagramMap.get(sortSentWord))
-                if(anagramMap.has(sortSentWord) && (anagramMap.get(sortSentWord) > 1)){
+        // console.log(anagramMap);
+        for(let j=0; j<splSent.length; j++){ //O(n)
+            const sortSentWord = splSent[j].split('').sort((a,b) => a.localeCompare(b)).join(''); //O(nlogn)
+            // console.log("word "+ splSent[j] + " has: " + anagramMap.has(sortSentWord) + " times " + anagramMap.get(sortSentWord))
+                if(anagramMap.has(sortSentWord) && (anagramMap.get(sortSentWord) > 1)){ //O(1)
                     totalAnagrams += anagramMap.get(sortSentWord);
                 }
         }
