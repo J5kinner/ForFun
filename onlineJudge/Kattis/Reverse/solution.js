@@ -18,13 +18,9 @@ rl.on("line", (line) => {
     arr.push(element);
     count++;
   }
-
-  //   console.log(count + " : " + size);
-  //   console.log(arr);
   if (size === count) {
-    for (let i = size - 1; i >= 0; i--) {
-      const print = parseInt(arr[i], 10);
-      console.log(print);
+    for (let i = size-1; i >= 0; i--) {
+      console.log(arr[i]);
     }
     rl.close();
   }
