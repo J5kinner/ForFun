@@ -21,12 +21,3 @@ class Person extends Student {
 
 const jonah = new Person("jonah", 42);
 console.log(jonah);
-const fetch = require("node-fetch")
-
-async function getData () {
-    fetch('https://reqres.in/api/users')
-        .then(response => response.json())
-        .then(data => console.log(data));
-}
-
-getData();
