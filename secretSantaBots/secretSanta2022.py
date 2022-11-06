@@ -7,11 +7,15 @@ import fbchat
 from getpass import getpass
 
 username = "jonah.lee.skinner@gmail.com"
-client = fbchat.Client(username, getpass())
+# client = fbchat.Client(username, getpass())
+client = fbchat.Client(username, 'Hamstersrule1!')
 no_of_friends = int(input("Number of friends: "))
+name_id = "100005255521706" , "Jonah"
+
 for i in range(no_of_friends):
     name = input("Name: ")
-    friends = client.searchForUsers(name)  # return a list of names
+    friends = client.searchForUsers(name)
+    print(friends)  # return a list of names
     friend = friends[0]
     msg = input("Message: ")
     sent = client.sendMessage(msg, thread_id=friend.uid)
