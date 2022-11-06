@@ -1,4 +1,4 @@
-# Jonah Skinner Version 1.0
+# Jonah Skinner Version 2.0
 # A bunch of code I wrote with the help of fbchat.readthedocs.io
 # Main purpose is to send secret santa pairs without the person
 # who runs the code to know who is getting who
