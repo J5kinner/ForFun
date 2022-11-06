@@ -7,8 +7,8 @@ import fbchat
 from getpass import getpass
 
 username = "jonah.lee.skinner@gmail.com"
-# client = fbchat.Client(username, getpass())
-client = fbchat.Client(username, 'Hamstersrule1!')
+client = fbchat.Client(username, getpass())
+# client = fbchat.Client(username, 'ENTERPASSWORDHEREFROMPHONE')
 no_of_friends = int(input("Number of friends: "))
 name_id = "100005255521706", "Jonah"
 

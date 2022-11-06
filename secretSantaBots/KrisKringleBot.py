@@ -1,17 +1,17 @@
 # Jonah Skinner Version 2.0
-# A bunch of code I wrote with the help of fbchat.readthedocs.io
-# Main purpose is to send secret santa pairs without the person
-# who runs the code to know who is getting who
+# fbchat.readthedocs.io helped alot here
+# Purpose: 
+# Uses a FB account which 
 from itertools import islice
 from fbchat import Client
 from fbchat.models import *
 import random
 import time
-client = Client('jonah.lee.skinner@gmail.com', 'Hamstersrule1!')
+client = Client('jonah.lee.skinner@gmail.com', 'ENTERPASSWORDHEREFROMPHONE')
 thread_type = ThreadType.USER
 
 # tuples of messenger account IDs , Names
-
+# OLD ACCOUNTS
 # hamish_id = "100000506289191", "Hamish"
 # jesse_id = "100000763206918", "Jesse"
 # connorD_id = "100001494927645", "ConnorD"
@@ -19,6 +19,8 @@ thread_type = ThreadType.USER
 # beez_id = "605579574", "Beeez"
 # connorP_id = "624019890", "ConnorP"
 # brendan_id = "837735817", "Brendan"
+
+# LAST USED ACCOUNTS
 olivia_id = "100004648574032", "Olivia"
 jonah_id = "100005255521706", "Jonah"
 # cousins
@@ -32,8 +34,7 @@ alannah_id = "100006155319984", "Alannah"
 
 # Randomizes the list (only works if there is an even amount of people)
 # family = [jonah_id, hamish_id, jesse_id, connorD_id, bailey_id, beez_id, connorP_id, brendan_id, olivia_id ]
-
-# cousins list
+# Cousins
 family = [olivia_id, jonah_id, zac_id, eLane_id,
           eSavage_id, nathan_id, jason_id, alannah_id]
 christmasGifs = [
@@ -48,7 +49,7 @@ christmasGifs = [
 ]
 home_id = jonah_id[0]
 gifCounter = 0
-# for counting who current pair to daisy chain first pair to the next pair.
+# For counting who current pair to daisy chain first pair to the next pair.
 pairCounter = 0
 pairs = {}
 
@@ -57,12 +58,13 @@ for p in range(len(family) // 2):
     pairs[p+1] = (family.pop(random.randrange(len(family))),
                   family.pop(random.randrange(len(family))))
 
-# Sends out messages from client from the first person then the second in the pair
-# Then the the last person in the pair gets the first person of the next pair
-# Then the last person in the whole list gets a present for the first person in the whole pair list
+
 # pairs = {1: (["100005255521706" , "Jonah"], ["100004648574032", "Olivia"])}
 firstPersonName = pairs[1][0][1]
-# print(firstPersonName)
+# Relationships given out in the following order {
+# 1: (firstPerson -> SecondPerson), 
+# 2: (secondPerson -> Thirdperson, thirdPerson -> fourthPerson), 
+# 3: (fourthPerson -> fifthPerson, lastPerson -> firstPerson),)}
 for x in pairs:
     fbId1 = pairs[x][0]
     fbId2 = pairs[x][1]
