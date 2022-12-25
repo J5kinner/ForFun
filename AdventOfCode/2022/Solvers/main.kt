@@ -12,7 +12,6 @@ fun main(args: Array<String>) {
     var winners = arrayOf(0, 0, 0)
     File("Solvers/tests/day1.txt").readLines().forEach {
         count++
-        // println(underdog)
         if (it.isNotEmpty() && it != "") {
             underdog += it.toInt()
         }
@@ -36,10 +35,6 @@ fun main(args: Array<String>) {
             if (winners[2] < underdog && !checked && !checked2) {
                 winners[2] = underdog
             }
-
-
-
-
             println("1st: ${winners[0]}, 2nd: ${winners[1]}, 3rd: ${winners[2]} ")
             underdog = 0
         }
