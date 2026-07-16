@@ -19,5 +19,4 @@ sealed interface CalculatorIntent {
     data class InjectExpression(val expr: String) : CalculatorIntent
     data class InjectResult(val value: String) : CalculatorIntent
     data class HistoryLoaded(val items: List<HistoryRecord>) : CalculatorIntent
-    data class SwitchMode(val mode: CalcMode) : CalculatorIntent
 }

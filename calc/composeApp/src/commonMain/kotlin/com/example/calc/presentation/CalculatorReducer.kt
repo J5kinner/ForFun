@@ -91,7 +91,6 @@ class CalculatorReducer(private val engine: MathEngine) {
             r.copy(state = r.state.copy(historyVisible = false))
         }
         is CalculatorIntent.HistoryLoaded -> Reduction(state.copy(history = intent.items))
-        is CalculatorIntent.SwitchMode -> Reduction(state.copy(mode = intent.mode))
     }
 
     private fun fresh(state: CalculatorState, newInput: String): Reduction {

@@ -5,8 +5,6 @@ import com.example.calc.domain.CalcError
 import com.example.calc.domain.NumberFormatter
 import com.ionspin.kotlin.bignum.decimal.BigDecimal
 
-enum class CalcMode { Standard }
-
 data class CalculatorState(
     val input: String = "",
     val preview: String = "",
@@ -15,7 +13,6 @@ data class CalculatorState(
     val justEvaluated: Boolean = false,
     val history: List<HistoryRecord> = emptyList(),
     val historyVisible: Boolean = false,
-    val mode: CalcMode = CalcMode.Standard,
 )
 
 fun CalculatorState.displayText(): String = when {

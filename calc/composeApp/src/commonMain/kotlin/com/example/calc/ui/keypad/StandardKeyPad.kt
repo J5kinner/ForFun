@@ -3,7 +3,7 @@ package com.example.calc.ui.keypad
 import com.example.calc.domain.Operator
 import com.example.calc.presentation.CalculatorIntent
 
-private fun digit(c: Char) = Key(c.toString(), KeyStyle.Number, CalculatorIntent.Digit(c))
+private fun digit(c: Char): Key<CalculatorIntent> = Key(c.toString(), KeyStyle.Number, CalculatorIntent.Digit(c))
 
 /**
  * Thumb-friendly layout: utilities on the top row, the number pad forms the
@@ -11,7 +11,7 @@ private fun digit(c: Char) = Key(c.toString(), KeyStyle.Number, CalculatorIntent
  * right-hand column with "=" at the bottom-right — reachable one-handed or with
  * two thumbs. Uniform square keys for large, consistent touch targets.
  */
-val standardKeyPad: KeyPad = listOf(
+val standardKeyPad: KeyPad<CalculatorIntent> = listOf(
     listOf(
         Key("C", KeyStyle.Accent, CalculatorIntent.Clear),
         Key("⌫", KeyStyle.Function, CalculatorIntent.Delete),
