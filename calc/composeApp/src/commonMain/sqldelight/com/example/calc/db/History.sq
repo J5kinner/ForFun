@@ -1,0 +1,19 @@
+CREATE TABLE history (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    expression TEXT NOT NULL,
+    result TEXT NOT NULL,
+    timestamp INTEGER NOT NULL DEFAULT (strftime('%s','now'))
+);
+
+insertEntry:
+INSERT INTO history(expression, result)
+VALUES (?, ?);
+
+selectAll:
+SELECT id, expression, result, timestamp
+FROM history
+ORDER BY id DESC
+LIMIT 100;
+
+deleteAll:
+DELETE FROM history;
