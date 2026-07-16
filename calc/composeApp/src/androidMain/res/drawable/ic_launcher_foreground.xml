@@ -1,0 +1,29 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Calculator scaled to 55% (45% smaller) around the icon centre. -->
+    <group
+        android:pivotX="54"
+        android:pivotY="54"
+        android:scaleX="0.55"
+        android:scaleY="0.55">
+        <!-- calculator body -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M41,24 h26 a8,8 0 0 1 8,8 v44 a8,8 0 0 1 -8,8 h-26 a8,8 0 0 1 -8,-8 v-44 a8,8 0 0 1 8,-8 Z" />
+        <!-- screen -->
+        <path
+            android:fillColor="#2A3552"
+            android:pathData="M42,30 h24 a3,3 0 0 1 3,3 v5 a3,3 0 0 1 -3,3 h-24 a3,3 0 0 1 -3,-3 v-5 a3,3 0 0 1 3,-3 Z" />
+        <!-- button dots -->
+        <path
+            android:fillColor="#C9D2E8"
+            android:pathData="M39.6,51 a3.4,3.4 0 1,0 6.8,0 a3.4,3.4 0 1,0 -6.8,0 Z M50.6,51 a3.4,3.4 0 1,0 6.8,0 a3.4,3.4 0 1,0 -6.8,0 Z M61.6,51 a3.4,3.4 0 1,0 6.8,0 a3.4,3.4 0 1,0 -6.8,0 Z M39.6,61 a3.4,3.4 0 1,0 6.8,0 a3.4,3.4 0 1,0 -6.8,0 Z M50.6,61 a3.4,3.4 0 1,0 6.8,0 a3.4,3.4 0 1,0 -6.8,0 Z M61.6,61 a3.4,3.4 0 1,0 6.8,0 a3.4,3.4 0 1,0 -6.8,0 Z M39.6,71 a3.4,3.4 0 1,0 6.8,0 a3.4,3.4 0 1,0 -6.8,0 Z M50.6,71 a3.4,3.4 0 1,0 6.8,0 a3.4,3.4 0 1,0 -6.8,0 Z" />
+        <!-- accent key -->
+        <path
+            android:fillColor="#FF8A3D"
+            android:pathData="M61.6,71 a3.4,3.4 0 1,0 6.8,0 a3.4,3.4 0 1,0 -6.8,0 Z" />
+    </group>
+</vector>
