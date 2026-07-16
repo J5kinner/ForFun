@@ -3,10 +3,14 @@ package com.example.calc.ui
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -32,6 +36,15 @@ fun CalculatorScreen(vm: CalculatorViewModel) {
                     .padding(16.dp),
                 verticalArrangement = Arrangement.Bottom,
             ) {
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                    IconButton(onClick = { vm.dispatch(CalculatorIntent.ShowHistory) }) {
+                        Icon(
+                            imageVector = HistoryIcon,
+                            contentDescription = "History",
+                            tint = MaterialTheme.colorScheme.onBackground,
+                        )
+                    }
+                }
                 CalculatorDisplay(
                     state = state,
                     onSwipeDown = { vm.dispatch(CalculatorIntent.ShowHistory) },
