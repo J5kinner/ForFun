@@ -1,6 +1,9 @@
 package com.example.calc.presentation
 
 import com.example.calc.domain.Operator
+import com.example.calc.domain.convert.UnitCategory
+import com.example.calc.domain.convert.currency.RatesSource
+import com.example.calc.presentation.convert.ConverterIntent
 import com.example.calc.support.FakeHistoryRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -68,5 +71,17 @@ class AppViewModelTest {
         testScheduler.advanceUntilIdle()
         assertTrue(effects.any { it is CalculatorEffect.ErrorBlip })
         job.cancel()
+    }
+
+    @Test fun converterCurrencyFallsBackToBundledOffline() = runTest(dispatcher) {
+        val vm = AppViewModel(FakeHistoryRepository())
+        vm.onConverter(ConverterIntent.SelectCategory(UnitCategory.Currency))
+        vm.onConverter(ConverterIntent.Digit('1'))
+        vm.onConverter(ConverterIntent.Digit('0'))
+        vm.onConverter(ConverterIntent.Digit('0'))
+        testScheduler.advanceUntilIdle()
+        val c = vm.state.value.converter
+        assertEquals(RatesSource.BUNDLED, c.ratesSource)
+        assertEquals("92", c.textB) // 100 USD -> EUR at bundled 0.92
     }
 }

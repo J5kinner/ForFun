@@ -27,8 +27,11 @@ class UnitCategoryTest {
         assertEquals(BigDecimal.parseString("1"), (m.conversion as Ratio).factor)
     }
 
-    @Test fun currencyStartsEmpty() {
-        assertTrue(UnitCategory.Currency.units.isEmpty())
+    @Test fun currencyOffersStaticCodes() {
+        val ids = UnitCategory.Currency.units.map { it.id }
+        assertTrue("USD" in ids && "EUR" in ids)
+        // defaultFrom/defaultTo must be usable (no longer throw on empty list)
+        assertTrue(UnitCategory.Currency.defaultFrom.id != UnitCategory.Currency.defaultTo.id)
     }
 
     @Test fun linearCategoriesExcludeCurrency() {

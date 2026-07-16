@@ -6,6 +6,12 @@ import com.ionspin.kotlin.bignum.decimal.BigDecimal
 // (a companion-object member would still be uninitialized at that point).
 private fun bd(s: String): BigDecimal = BigDecimal.parseString(s)
 
+// Currency units are static (the offered ISO codes); only the RATES are dynamic.
+// The Ratio here is a placeholder — currency conversion goes through
+// CurrencyConversion via an ExchangeRates table keyed by these ids, never toBase.
+// Every code here must exist in both the bundled table and the live API response.
+private fun cur(code: String, name: String) = UnitDef(code, code, name, Ratio(bd("1")))
+
 /**
  * The seven converter categories.
  *
@@ -85,12 +91,26 @@ enum class UnitCategory(val displayName: String, val units: List<UnitDef>) {
             UnitDef("fts", "ft/s", "Feet/second", Ratio(bd("1.09728"))),
         ),
     ),
-    Currency("Currency", emptyList()); // populated at runtime from an ExchangeRates table
+    Currency(
+        "Currency",
+        listOf(
+            cur("USD", "US Dollar"),
+            cur("EUR", "Euro"),
+            cur("GBP", "British Pound"),
+            cur("JPY", "Japanese Yen"),
+            cur("CAD", "Canadian Dollar"),
+            cur("AUD", "Australian Dollar"),
+            cur("CHF", "Swiss Franc"),
+            cur("CNY", "Chinese Yuan"),
+            cur("INR", "Indian Rupee"),
+            cur("MXN", "Mexican Peso"),
+        ),
+    );
 
-    /** First catalogued unit. NOTE: throws for [Currency] (empty until rates load — fill it first). */
+    /** First catalogued unit. */
     val defaultFrom: UnitDef get() = units.first()
 
-    /** Second catalogued unit (falls back to the first if only one exists). Throws for empty [Currency]. */
+    /** Second catalogued unit (falls back to the first if only one exists). */
     val defaultTo: UnitDef get() = units.getOrElse(1) { units.first() }
 
     companion object {
