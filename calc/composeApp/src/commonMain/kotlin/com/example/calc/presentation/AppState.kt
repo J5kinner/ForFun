@@ -7,5 +7,6 @@ package com.example.calc.presentation
 data class AppState(
     val mode: CalcMode = CalcMode.Standard,
     val standard: CalculatorState = CalculatorState(),
-    // programmer/converter sub-states are added in later phases as their types land.
+    val programmer: ProgrammerState = ProgrammerState(),
+    // converter sub-state is added in a later phase as its type lands.
 )

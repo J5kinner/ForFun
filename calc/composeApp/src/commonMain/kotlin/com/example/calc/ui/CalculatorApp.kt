@@ -23,6 +23,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.calc.presentation.AppViewModel
 import com.example.calc.presentation.CalcMode
 import com.example.calc.presentation.CalculatorIntent
+import com.example.calc.ui.programmer.ProgrammerBody
 
 @Composable
 fun CalculatorApp(vm: AppViewModel) {
@@ -55,7 +56,11 @@ fun CalculatorApp(vm: AppViewModel) {
                         dispatch = vm::onStandard,
                         modifier = Modifier.weight(1f),
                     )
-                    CalcMode.Programmer -> PlaceholderBody("Programmer", Modifier.weight(1f))
+                    CalcMode.Programmer -> ProgrammerBody(
+                        state = state.programmer,
+                        onIntent = vm::onProgrammer,
+                        modifier = Modifier.weight(1f),
+                    )
                     CalcMode.Converter -> PlaceholderBody("Converter", Modifier.weight(1f))
                 }
             }

@@ -23,6 +23,7 @@ class AppViewModel(
 ) : ViewModel() {
 
     private val standardReducer = CalculatorReducer(engine)
+    private val programmerReducer = ProgrammerReducer()
 
     private val _state = MutableStateFlow(AppState())
     val state: StateFlow<AppState> = _state.asStateFlow()
@@ -49,6 +50,13 @@ class AppViewModel(
                 else -> _effects.tryEmit(effect)
             }
         }
+    }
+
+    fun onProgrammer(intent: ProgrammerIntent) {
+        val prev = _state.value.programmer
+        val next = programmerReducer.reduce(prev, intent)
+        _state.update { it.copy(programmer = next) }
+        if (next.error != null && prev.error == null) _effects.tryEmit(CalculatorEffect.ErrorBlip)
     }
 
     fun clearHistory() {
