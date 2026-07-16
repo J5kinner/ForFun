@@ -868,7 +868,7 @@ object NumberFormatter {
         val fracPart = if (dot >= 0) plain.substring(dot + 1) else ""
         val intDigits = intPart.trimStart('0').ifEmpty { "0" }
         val leadingFracZeros = if (intDigits == "0") fracPart.takeWhile { it == '0' }.length else 0
-        val useSci = intDigits.length > 16 || (intDigits == "0" && fracPart.isNotEmpty() && leadingFracZeros >= 9)
+        val useSci = intDigits.length > 16 || (intDigits == "0" && fracPart.isNotEmpty() && leadingFracZeros >= 6)
         val body = if (useSci) toScientific(intPart, fracPart) else groupAndTrim(intDigits, fracPart)
         return if (negative) "-$body" else body
     }
