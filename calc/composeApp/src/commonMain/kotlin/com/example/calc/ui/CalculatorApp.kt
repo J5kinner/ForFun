@@ -23,6 +23,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.calc.presentation.AppViewModel
 import com.example.calc.presentation.CalcMode
 import com.example.calc.presentation.CalculatorIntent
+import com.example.calc.ui.convert.ConverterBody
 import com.example.calc.ui.programmer.ProgrammerBody
 
 @Composable
@@ -61,7 +62,11 @@ fun CalculatorApp(vm: AppViewModel) {
                         onIntent = vm::onProgrammer,
                         modifier = Modifier.weight(1f),
                     )
-                    CalcMode.Converter -> PlaceholderBody("Converter", Modifier.weight(1f))
+                    CalcMode.Converter -> ConverterBody(
+                        state = state.converter,
+                        onIntent = vm::onConverter,
+                        modifier = Modifier.weight(1f),
+                    )
                 }
             }
         }
@@ -74,12 +79,5 @@ fun CalculatorApp(vm: AppViewModel) {
             onClear = { vm.clearHistory() },
             onDismiss = { vm.onStandard(CalculatorIntent.HideHistory) },
         )
-    }
-}
-
-@Composable
-private fun PlaceholderBody(label: String, modifier: Modifier = Modifier) {
-    Box(modifier = modifier.fillMaxWidth().padding(24.dp), contentAlignment = Alignment.Center) {
-        Text(label, color = MaterialTheme.colorScheme.onBackground)
     }
 }
