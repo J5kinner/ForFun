@@ -10,30 +10,38 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class CalculatorViewModel(
+/**
+ * Root ViewModel hosting all modes. It routes intents to per-mode pure reducers
+ * and keeps a single [AppState] / [StateFlow] the UI collects.
+ */
+class AppViewModel(
     private val repository: HistoryRepository,
     engine: MathEngine = MathEngine(),
 ) : ViewModel() {
 
-    private val reducer = CalculatorReducer(engine)
-    private val _state = MutableStateFlow(CalculatorState())
-    val state: StateFlow<CalculatorState> = _state.asStateFlow()
+    private val standardReducer = CalculatorReducer(engine)
+
+    private val _state = MutableStateFlow(AppState())
+    val state: StateFlow<AppState> = _state.asStateFlow()
     private val _effects = MutableSharedFlow<CalculatorEffect>(extraBufferCapacity = 16)
     val effects: SharedFlow<CalculatorEffect> = _effects.asSharedFlow()
 
     init {
         viewModelScope.launch {
             repository.observeHistory().collect { items ->
-                _state.value = reducer.reduce(_state.value, CalculatorIntent.HistoryLoaded(items)).state
+                _state.update { it.copy(standard = it.standard.copy(history = items)) }
             }
         }
     }
 
-    fun dispatch(intent: CalculatorIntent) {
-        val reduction = reducer.reduce(_state.value, intent)
-        _state.value = reduction.state
+    fun selectMode(mode: CalcMode) = _state.update { it.copy(mode = mode) }
+
+    fun onStandard(intent: CalculatorIntent) {
+        val reduction = standardReducer.reduce(_state.value.standard, intent)
+        _state.update { it.copy(standard = reduction.state) }
         for (effect in reduction.effects) {
             when (effect) {
                 is CalculatorEffect.PersistHistory ->

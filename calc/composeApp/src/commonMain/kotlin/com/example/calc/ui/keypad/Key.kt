@@ -1,14 +1,13 @@
 package com.example.calc.ui.keypad
 
-import com.example.calc.presentation.CalculatorIntent
+enum class KeyStyle { Number, Operator, Function, Accent, Equals, Toggle, ToggleActive }
 
-enum class KeyStyle { Number, Operator, Function, Accent, Equals }
-
-data class Key(
+data class Key<I>(
     val label: String,
     val style: KeyStyle,
-    val intent: CalculatorIntent,
+    val intent: I,
     val span: Int = 1,
+    val enabled: Boolean = true,
 )
 
-typealias KeyPad = List<List<Key>>
+typealias KeyPad<I> = List<List<Key<I>>>
