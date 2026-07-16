@@ -7,6 +7,10 @@ import androidx.activity.enableEdgeToEdge
 import com.example.calc.data.DatabaseDriverFactory
 import com.example.calc.data.SqlDelightHistoryRepository
 import com.example.calc.data.createDatabase
+import com.example.calc.data.net.KtorExchangeRateProvider
+import com.example.calc.domain.convert.currency.DefaultExchangeRateRepository
+import com.example.calc.domain.convert.currency.InMemoryRatesCache
+import com.example.calc.platform.epochSeconds
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,6 +19,11 @@ class MainActivity : ComponentActivity() {
         val repository = SqlDelightHistoryRepository(
             createDatabase(DatabaseDriverFactory(applicationContext)),
         )
-        setContent { App(repository) }
+        val rateRepo = DefaultExchangeRateRepository(
+            provider = KtorExchangeRateProvider(),
+            cache = InMemoryRatesCache(),
+            now = ::epochSeconds,
+        )
+        setContent { App(repository, rateRepo) }
     }
 }
