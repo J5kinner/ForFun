@@ -1,13 +1,10 @@
 package com.example.calc.ui
 
-import androidx.compose.foundation.gestures.detectHorizontalDragGestures
-import androidx.compose.foundation.gestures.detectVerticalDragGestures
-import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.calc.presentation.CalculatorState
 import com.example.calc.presentation.displayText
+import kotlin.math.abs
 
 @Composable
 fun CalculatorDisplay(
@@ -32,10 +30,16 @@ fun CalculatorDisplay(
             .fillMaxWidth()
             .padding(horizontal = 24.dp, vertical = 16.dp)
             .pointerInput(Unit) {
-                detectVerticalDragGestures { _, dragAmount -> if (dragAmount > 24f) onSwipeDown() }
-            }
-            .pointerInput(Unit) {
-                detectHorizontalDragGestures { _, dragAmount -> if (dragAmount < -24f) onSwipeLeft() }
+                var dx = 0f
+                var dy = 0f
+                detectDragGestures(
+                    onDragStart = { dx = 0f; dy = 0f },
+                    onDrag = { _, amount -> dx += amount.x; dy += amount.y },
+                    onDragEnd = {
+                        if (abs(dy) >= abs(dx) && dy > 40f) onSwipeDown()
+                        else if (abs(dx) > abs(dy) && dx < -40f) onSwipeLeft()
+                    },
+                )
             },
         horizontalAlignment = Alignment.End,
         verticalArrangement = Arrangement.Bottom,
@@ -43,11 +47,12 @@ fun CalculatorDisplay(
         val showPreview = state.preview.isNotEmpty() && !state.justEvaluated && state.error == null
         Text(
             text = state.displayText(),
-            color = MaterialTheme.colorScheme.onBackground,
-            fontSize = 56.sp,
+            color = if (state.error != null) MaterialTheme.colorScheme.error
+            else MaterialTheme.colorScheme.onBackground,
+            fontSize = if (state.error != null) 30.sp else 56.sp,
             textAlign = TextAlign.End,
             maxLines = 1,
-            modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
+            modifier = Modifier.fillMaxWidth(),
         )
         Text(
             text = if (showPreview) "= ${state.preview}" else " ",
@@ -55,7 +60,7 @@ fun CalculatorDisplay(
             fontSize = 24.sp,
             textAlign = TextAlign.End,
             maxLines = 1,
-            modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
+            modifier = Modifier.fillMaxWidth(),
         )
     }
 }
