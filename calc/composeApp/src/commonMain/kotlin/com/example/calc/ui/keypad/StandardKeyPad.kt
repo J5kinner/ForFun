@@ -22,8 +22,7 @@ val standardKeyPad: KeyPad = listOf(
     listOf(digit('4'), digit('5'), digit('6'), Key("−", KeyStyle.Operator, CalculatorIntent.Op(Operator.Minus))),
     listOf(digit('1'), digit('2'), digit('3'), Key("+", KeyStyle.Operator, CalculatorIntent.Op(Operator.Plus))),
     listOf(
-        Key("±", KeyStyle.Function, CalculatorIntent.ToggleSign),
-        digit('0'),
+        Key("0", KeyStyle.Number, CalculatorIntent.Digit('0'), span = 2),
         Key(".", KeyStyle.Number, CalculatorIntent.Decimal),
         Key("=", KeyStyle.Equals, CalculatorIntent.Equals),
     ),
