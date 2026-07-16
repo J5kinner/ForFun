@@ -4,7 +4,6 @@ import com.example.calc.domain.CalcResult
 import com.example.calc.domain.MathEngine
 import com.example.calc.domain.NumberFormatter
 import com.example.calc.domain.Operator
-import com.ionspin.kotlin.bignum.decimal.BigDecimal
 
 private val OPERATOR_GLYPHS = charArrayOf('+', '−', '×', '÷')
 
@@ -77,9 +76,8 @@ class CalculatorReducer(private val engine: MathEngine) {
             val base = state.input
             if (base.isEmpty()) Reduction(state.copy(error = null)) else fresh(state, base.dropLast(1))
         }
-        CalculatorIntent.Clear -> Reduction(CalculatorState(memory = state.memory, history = state.history))
+        CalculatorIntent.Clear -> Reduction(CalculatorState(history = state.history))
         CalculatorIntent.Equals -> equals(state)
-        is CalculatorIntent.Memory -> memory(state, intent.action)
         CalculatorIntent.ShowHistory -> Reduction(state.copy(historyVisible = true))
         CalculatorIntent.HideHistory -> Reduction(state.copy(historyVisible = false))
         is CalculatorIntent.InjectExpression -> {
@@ -123,27 +121,6 @@ class CalculatorReducer(private val engine: MathEngine) {
                 listOf(CalculatorEffect.ErrorBlip),
             )
             CalcResult.Empty -> Reduction(state)
-        }
-    }
-
-    private fun currentValue(state: CalculatorState): BigDecimal? = when {
-        state.justEvaluated && state.result != null -> state.result
-        else -> (engine.evaluate(state.input) as? CalcResult.Success)?.value
-    }
-
-    private fun memory(state: CalculatorState, action: MemoryAction): Reduction = when (action) {
-        MemoryAction.MC -> Reduction(state.copy(memory = null))
-        MemoryAction.MS -> currentValue(state)?.let { Reduction(state.copy(memory = it)) } ?: Reduction(state)
-        MemoryAction.MPlus -> currentValue(state)?.let {
-            Reduction(state.copy(memory = (state.memory ?: BigDecimal.ZERO).add(it)))
-        } ?: Reduction(state)
-        MemoryAction.MMinus -> currentValue(state)?.let {
-            Reduction(state.copy(memory = (state.memory ?: BigDecimal.ZERO).subtract(it)))
-        } ?: Reduction(state)
-        MemoryAction.MR -> {
-            val m = state.memory ?: return Reduction(state)
-            val base = if (state.justEvaluated || state.error != null) "" else state.input
-            fresh(state, base + NumberFormatter.plain(m))
         }
     }
 }

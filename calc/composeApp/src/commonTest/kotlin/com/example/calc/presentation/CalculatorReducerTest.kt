@@ -3,7 +3,6 @@ package com.example.calc.presentation
 import com.example.calc.domain.CalcError
 import com.example.calc.domain.MathEngine
 import com.example.calc.domain.Operator
-import com.ionspin.kotlin.bignum.decimal.BigDecimal
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
@@ -59,22 +58,9 @@ class CalculatorReducerTest {
         assertEquals(CalcError.DivByZero, s.error)
         assertNull(s.result)
     }
-    @Test fun clearKeepsMemory() {
-        val start = CalculatorState(input = "9", memory = BigDecimal.fromInt(4))
-        val s = reducer.reduce(start, CalculatorIntent.Clear).state
+    @Test fun clearResetsInput() {
+        val s = reducer.reduce(CalculatorState(input = "9"), CalculatorIntent.Clear).state
         assertEquals("", s.input)
-        assertEquals("4", s.memory?.toStringExpanded())
-    }
-    @Test fun memoryStoreRecall() {
-        var s = reducer.reduce(CalculatorState(input = "8"), CalculatorIntent.Memory(MemoryAction.MS)).state
-        assertEquals("8", s.memory?.toStringExpanded())
-        s = reducer.reduce(s.copy(input = ""), CalculatorIntent.Memory(MemoryAction.MR)).state
-        assertEquals("8", s.input)
-    }
-    @Test fun memoryPlus() {
-        var s = reducer.reduce(CalculatorState(input = "8"), CalculatorIntent.Memory(MemoryAction.MS)).state
-        s = reducer.reduce(s.copy(input = "2"), CalculatorIntent.Memory(MemoryAction.MPlus)).state
-        assertEquals("10", s.memory?.toStringExpanded())
     }
     @Test fun deleteRemovesLastChar() {
         assertEquals("1", reducer.reduce(CalculatorState(input = "12"), CalculatorIntent.Delete).state.input)

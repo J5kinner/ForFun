@@ -35,13 +35,7 @@ fun CalculatorScreen(vm: CalculatorViewModel) {
                 CalculatorDisplay(
                     state = state,
                     onSwipeDown = { vm.dispatch(CalculatorIntent.ShowHistory) },
-                    onSwipeLeft = { vm.dispatch(CalculatorIntent.Delete) },
                     modifier = Modifier.weight(1f),
-                )
-                MemoryRow(
-                    hasMemory = state.memory != null,
-                    onMemory = { vm.dispatch(CalculatorIntent.Memory(it)) },
-                    modifier = Modifier.padding(vertical = 8.dp),
                 )
                 CalculatorKeypad(pad = standardKeyPad, onKey = { vm.dispatch(it) })
             }

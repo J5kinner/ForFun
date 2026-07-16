@@ -3,8 +3,6 @@ package com.example.calc.presentation
 import com.example.calc.data.HistoryRecord
 import com.example.calc.domain.Operator
 
-enum class MemoryAction { MC, MR, MPlus, MMinus, MS }
-
 sealed interface CalculatorIntent {
     data class Digit(val d: Char) : CalculatorIntent
     data object Decimal : CalculatorIntent
@@ -16,7 +14,6 @@ sealed interface CalculatorIntent {
     data object Delete : CalculatorIntent
     data object Clear : CalculatorIntent
     data object Equals : CalculatorIntent
-    data class Memory(val action: MemoryAction) : CalculatorIntent
     data object ShowHistory : CalculatorIntent
     data object HideHistory : CalculatorIntent
     data class InjectExpression(val expr: String) : CalculatorIntent

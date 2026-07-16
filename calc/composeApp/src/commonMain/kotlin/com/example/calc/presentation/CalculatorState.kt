@@ -13,7 +13,6 @@ data class CalculatorState(
     val result: BigDecimal? = null,
     val error: CalcError? = null,
     val justEvaluated: Boolean = false,
-    val memory: BigDecimal? = null,
     val history: List<HistoryRecord> = emptyList(),
     val historyVisible: Boolean = false,
     val mode: CalcMode = CalcMode.Standard,

@@ -1,28 +1,29 @@
 package com.example.calc.ui
 
-import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.gestures.detectVerticalDragGestures
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.calc.presentation.CalculatorState
 import com.example.calc.presentation.displayText
-import kotlin.math.abs
 
 @Composable
 fun CalculatorDisplay(
     state: CalculatorState,
     onSwipeDown: () -> Unit,
-    onSwipeLeft: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -30,37 +31,49 @@ fun CalculatorDisplay(
             .fillMaxWidth()
             .padding(horizontal = 24.dp, vertical = 16.dp)
             .pointerInput(Unit) {
-                var dx = 0f
-                var dy = 0f
-                detectDragGestures(
-                    onDragStart = { dx = 0f; dy = 0f },
-                    onDrag = { _, amount -> dx += amount.x; dy += amount.y },
-                    onDragEnd = {
-                        if (abs(dy) >= abs(dx) && dy > 40f) onSwipeDown()
-                        else if (abs(dx) > abs(dy) && dx < -40f) onSwipeLeft()
-                    },
-                )
+                detectVerticalDragGestures { _, dragAmount -> if (dragAmount > 32f) onSwipeDown() }
             },
         horizontalAlignment = Alignment.End,
         verticalArrangement = Arrangement.Bottom,
     ) {
         val showPreview = state.preview.isNotEmpty() && !state.justEvaluated && state.error == null
-        Text(
+        ScrollingLine(
             text = state.displayText(),
+            fontSizeSp = if (state.error != null) 30 else 56,
             color = if (state.error != null) MaterialTheme.colorScheme.error
             else MaterialTheme.colorScheme.onBackground,
-            fontSize = if (state.error != null) 30.sp else 56.sp,
-            textAlign = TextAlign.End,
-            maxLines = 1,
-            modifier = Modifier.fillMaxWidth(),
         )
-        Text(
+        ScrollingLine(
             text = if (showPreview) "= ${state.preview}" else " ",
+            fontSizeSp = 24,
             color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.45f),
-            fontSize = 24.sp,
-            textAlign = TextAlign.End,
+        )
+    }
+}
+
+/**
+ * A single-line value that never wraps: right-aligned when it fits, and
+ * horizontally scrollable (kept pinned to the latest/right-most digits) when
+ * it overflows — the industry-standard calculator display behaviour.
+ */
+@Composable
+private fun ScrollingLine(
+    text: String,
+    fontSizeSp: Int,
+    color: androidx.compose.ui.graphics.Color,
+) {
+    val scroll = rememberScrollState()
+    LaunchedEffect(text) { scroll.scrollTo(scroll.maxValue) }
+    Box(
+        modifier = Modifier.fillMaxWidth().horizontalScroll(scroll),
+        contentAlignment = Alignment.CenterEnd,
+    ) {
+        Text(
+            text = text,
+            color = color,
+            fontSize = fontSizeSp.sp,
             maxLines = 1,
-            modifier = Modifier.fillMaxWidth(),
+            softWrap = false,
         )
     }
 }
