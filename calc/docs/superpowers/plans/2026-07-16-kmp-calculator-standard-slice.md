@@ -14,7 +14,7 @@
 - **Package root:** `com.example.calc`. Android namespace + applicationId: `com.example.calc`. Generated DB package: `com.example.calc.db`.
 - **No `Double` in core math.** All arithmetic uses `com.ionspin.kotlin.bignum.decimal.BigDecimal`.
 - **Locked versions (do not bump; all resolvable from `google()` + `mavenCentral()` + Gradle Plugin Portal):**
-  Kotlin `2.2.20`, Compose-compiler plugin `2.2.20` (== Kotlin, via `version.ref = "kotlin"`), Compose Multiplatform `1.11.1`, AGP `8.13.0`, Gradle wrapper `8.14.3`, SQLDelight `2.3.2`, bignum `0.3.10`, lifecycle `2.11.0`, material3-adaptive `1.2.0`, coroutines `1.10.2`, activity-compose `1.10.1`, core-ktx `1.16.0`, compileSdk/targetSdk `36`, minSdk `24`, JDK/jvmTarget `17`.
+  Kotlin `2.2.20`, Compose-compiler plugin `2.2.20` (== Kotlin, via `version.ref = "kotlin"`), Compose Multiplatform `1.11.1`, AGP `8.13.0`, Gradle wrapper `8.14.3`, SQLDelight `2.3.2`, bignum `0.3.10`, lifecycle `2.9.6` (2.11.0 requires AGP 9.1+/compileSdk 37 — downgraded during Task 1), material3-adaptive `1.2.0`, coroutines `1.10.2`, activity-compose `1.10.1`, core-ktx `1.16.0`, compileSdk/targetSdk `36`, minSdk `24`, JDK/jvmTarget `17`.
 - **Version-resolution fallback:** these versions were web-researched for mid-2026 and cross-checked, but the build resolver is the source of truth. If Gradle reports `Could not resolve <coord:version>`, drop to the nearest existing stable of that artifact and record the change in the task's commit message. Do **not** bump Kotlin above 2.2.x (SQLDelight 2.3.2 ceiling).
 - **bignum API reference (verified during research; adjust to the real symbol if a call fails at test time):** construct exact decimals with `BigDecimal.parseString("0.1")`; `BigDecimal.fromInt(n)`; constants `BigDecimal.ZERO/ONE/TEN`; operators `+ - * /` (add/sub/mul are exact by default); division needs a `DecimalMode(decimalPrecision = 34L, roundingMode = RoundingMode.ROUND_HALF_AWAY_FROM_ZERO)` and throws `ArithmeticException` on zero divisor (guard with `divisor.isZero()`); compare with `compareTo`/`<`/`>`/`==`, `isZero()`, `signum()`; plain string via `toStringExpanded()` (NOT `toString()`, which is scientific). Package `com.ionspin.kotlin.bignum.decimal`.
 - **TDD:** every domain/presentation task writes the failing test first, watches it fail, implements minimally, watches it pass, commits.
@@ -106,7 +106,7 @@ Expected: prints `Gradle 8.14.3`. If the download 404s, pick the nearest existin
 kotlin = "2.2.20"
 agp = "8.13.0"
 composeMultiplatform = "1.11.1"
-lifecycle = "2.11.0"
+lifecycle = "2.9.6"
 m3Adaptive = "1.2.0"
 sqldelight = "2.3.2"
 bignum = "0.3.10"
